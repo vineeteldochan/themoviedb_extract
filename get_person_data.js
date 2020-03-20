@@ -51,11 +51,23 @@ async function process_data(){
 
             person_data.combined_credits.cast.forEach((eachMovie)=>{
                 displayed = true
-                console.log(`${to_disp}\t${eachMovie.title}\t${eachMovie.release_date}`)
+                console.log(`${to_disp}\t${eachMovie.title}\t${eachMovie.release_date}\t${eachMovie.media_type}\tActor`)
+            }) 
+        }
+
+        if(person_data.combined_credits && person_data.combined_credits.crew instanceof Array && person_data.combined_credits.crew.length > 0){
+
+            person_data.combined_credits.crew.forEach((eachMovie)=>{
+                displayed = true
+                console.log(`${to_disp}\t${eachMovie.title}\t${eachMovie.release_date}\t${eachMovie.media_type}\t${eachMovie.job}`)
             })
         }
+
         if(displayed === false){
-            console.log(to_disp)
+            
+            if(displayed === false){
+                console.log(to_disp)
+            }
         }
         
 
