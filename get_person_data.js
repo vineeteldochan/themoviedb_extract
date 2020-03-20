@@ -45,13 +45,13 @@ async function process_data(){
     const file_list = get_file_data();
     for(let f in file_list){
         const person_data = await get_person_details(file_list[f].id);
-        let to_disp = `${person_data.id},${person_data.name},${person_data.birthday},${person_data.gender === 0 ? 'unknown' : person_data.gender === 1 ? 'female': person_data.gender === 2 ? 'male' : 'error'}`
+        let to_disp = `${person_data.id}    ${person_data.name} ${person_data.birthday} ${person_data.gender === 0 ? 'unknown' : person_data.gender === 1 ? 'female': person_data.gender === 2 ? 'male' : 'error'}`
         let displayed = false
         if(person_data.combined_credits && person_data.combined_credits.cast instanceof Array && person_data.combined_credits.cast.length > 0){
 
             person_data.combined_credits.cast.forEach((eachMovie)=>{
                 displayed = true
-                console.log(`${to_disp},${eachMovie.title},${eachMovie.release_date}`)
+                console.log(`${to_disp} ${eachMovie.title}  ${eachMovie.release_date}`)
             })
         }
         if(displayed === false){
