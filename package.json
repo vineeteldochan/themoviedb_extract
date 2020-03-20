@@ -1,0 +1,14 @@
+{
+  "name": "themoviedb_extract",
+  "version": "1.0.0",
+  "description": "Extracts details of movie stars and their movies",
+  "main": "get_person_data.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vineet Eldochan",
+  "license": "ISC",
+  "dependencies": {
+    "async-request": "^1.2.0"
+  }
+}
