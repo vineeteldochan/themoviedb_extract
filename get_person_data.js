@@ -1,7 +1,7 @@
 const request = require('async-request')
 const fs = require('fs')
 
-const file_path = "/Users/snehasamuel/themoviedb_extract/person_ids_03_20_2020.json"
+const file_path = "./person_ids_03_20_2020.json"
 
 if(!process.env.TMDB_API_KEY){
     console.log("API KEY Not set\nRun: export TMDB_API_KEY=<keyvalue>")
