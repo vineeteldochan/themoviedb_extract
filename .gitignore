@@ -1,2 +1,8 @@
 node_modules
 person_id*
+*.csv
+*.json
+*.zip
+nohup.out
+data.csv
+.DS_Store

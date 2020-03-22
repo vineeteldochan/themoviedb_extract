@@ -9,6 +9,7 @@
   "author": "Vineet Eldochan",
   "license": "ISC",
   "dependencies": {
-    "async-request": "^1.2.0"
+    "async-request": "^1.2.0",
+    "bluebird": "^3.7.2"
   }
 }

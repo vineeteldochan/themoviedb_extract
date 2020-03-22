@@ -1,5 +1,6 @@
 const request = require('async-request')
 const fs = require('fs')
+var Promise = require("bluebird");
 
 const file_path = "./person_ids_03_20_2020.json"
 
@@ -43,35 +44,36 @@ async function get_person_details(id){
 
 async function process_data(){
     const file_list = get_file_data();
-    for(let f in file_list){
-        const person_data = await get_person_details(file_list[f].id);
-        let to_disp = `${person_data.id}\t${person_data.name}\t${person_data.birthday}\t${person_data.gender === 0 ? 'unknown' : person_data.gender === 1 ? 'female': person_data.gender === 2 ? 'male' : 'error'}`
-        let displayed = false
-        if(person_data.combined_credits && person_data.combined_credits.cast instanceof Array && person_data.combined_credits.cast.length > 0){
+    Promise.map(file_list, process_each_row, {concurrency:10})
+ 
+}
 
-            person_data.combined_credits.cast.forEach((eachMovie)=>{
-                displayed = true
-                console.log(`${to_disp}\t${eachMovie.title}\t${eachMovie.release_date}\t${eachMovie.media_type}\tActor`)
-            }) 
-        }
+async function process_each_row(file_item){
+    const person_data = await get_person_details(file_item.id);
+    let to_disp = `${person_data.id}\t${person_data.name}\t${person_data.birthday}\t${person_data.gender === 0 ? 'unknown' : person_data.gender === 1 ? 'female': person_data.gender === 2 ? 'male' : 'error'}`
+    let displayed = false
+    if(person_data.combined_credits && person_data.combined_credits.cast instanceof Array && person_data.combined_credits.cast.length > 0){
 
-        if(person_data.combined_credits && person_data.combined_credits.crew instanceof Array && person_data.combined_credits.crew.length > 0){
+        person_data.combined_credits.cast.forEach((eachMovie)=>{
+            displayed = true
+            console.log(`${to_disp}\t${eachMovie.title}\t${eachMovie.release_date}\t${eachMovie.media_type}\tActor`)
+        }) 
+    }
 
-            person_data.combined_credits.crew.forEach((eachMovie)=>{
-                displayed = true
-                console.log(`${to_disp}\t${eachMovie.title}\t${eachMovie.release_date}\t${eachMovie.media_type}\t${eachMovie.job}`)
-            })
-        }
+    if(person_data.combined_credits && person_data.combined_credits.crew instanceof Array && person_data.combined_credits.crew.length > 0){
 
-        if(displayed === false){
-            
-            if(displayed === false){
-                console.log(to_disp)
-            }
-        }
+        person_data.combined_credits.crew.forEach((eachMovie)=>{
+            displayed = true
+            console.log(`${to_disp}\t${eachMovie.title}\t${eachMovie.release_date}\t${eachMovie.media_type}\t${eachMovie.job}`)
+        })
+    }
+
+    if(displayed === false){
         
-
-    }  
+        if(displayed === false){
+            console.log(to_disp)
+        }
+    }
 }
 
 
